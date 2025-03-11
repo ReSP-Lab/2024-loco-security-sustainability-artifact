@@ -1,0 +1,11 @@
+pandas
+numpy
+requests
+seaborn
+IPython
+scipy
+matplotlib
+jupyter
+ipykernel
+notebook
+pingouin
