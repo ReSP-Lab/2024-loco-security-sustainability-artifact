@@ -36,14 +36,14 @@ GATEWAY_IP=$(printf "%d.%d.%d.%d\n" \
 # Output the result for verification
 echo "Gateway IP: $GATEWAY_IP"
 
-# Append the gateway IP to /etc/hosts with your custom domain
+# Append the gateway IP to /etc/hosts with our custom domain
 echo "$GATEWAY_IP my-solution.com" >> /etc/hosts
 
-# Set host as DNS
+# Set host as DNS So that we can run the network adblocker (PiHole) on the host.
 echo "nameserver $GATEWAY_IP" > /etc/resolv.conf
 
 
 # Run the Python script (-u option to unbuffer the output)
 echo "Running Python script..."
-#python -u src/scenario.py scenarios_2025/2025_gmail_session_adblock.json
-python -u src/topnews.py noadblock
+python -u src/scenario.py scenarios_2025/2025_gmail_session_adblock.json
+#python -u src/topnews.py noadblock

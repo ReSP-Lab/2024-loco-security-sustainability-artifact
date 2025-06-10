@@ -28,7 +28,7 @@ services:
     container_name: mailserver
     # Provide the FQDN of your mail server here (Your DNS MX record should point to this value)
     hostname: mail.my-solution.com
-    env_file: mailserver.env
+    env_file: utils/mailserver.env
     networks:
       mail-network:
         ipv4_address: 172.20.0.3
