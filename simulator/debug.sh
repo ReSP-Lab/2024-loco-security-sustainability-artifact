@@ -22,6 +22,3 @@ do
 	    
 	done
 done
-
-
-#speaker-test -t sine -f 500 -l 1
