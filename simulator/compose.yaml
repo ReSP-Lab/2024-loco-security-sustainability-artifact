@@ -8,7 +8,7 @@ networks:
 
 services:
   simulator:
-    image: jkayembe/automated-session:latest
+    image: jkayembe/simulator:latest
     container_name: simulator
     networks:
       my-network:
@@ -16,10 +16,12 @@ services:
     ports:
       - "5900:5900"  # VNC port
     environment:
-      DISPLAY: ":0"  # Set the display environment variable for X server
       IS_MEASURED: "false"
       SEED: "123"
     volumes:
-      - .:/app  # Mount the current directory to /app
+      - ./entrypoint.sh:/app/entrypoint.sh  # Mount the entrypoint script
+      - ./src:/app/src  # Mount simulator
+      - ./scenarios_2025:/app/scenarios_2025  # Mount the scenarios directory
+      - ./emails_answers:/app/emails_answers  # Mount the emails answers directory
     working_dir: /app
     command: /app/entrypoint.sh

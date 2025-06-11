@@ -46,9 +46,7 @@ class WebDriver():
                 
                 if IS_CONTAINER:
                     # Set options and service for running in a container (e.g., using Chromium)
-                    #options.add_argument('--headless') # Required for running in Docker
-                    #options.add_argument('--disable-gpu')  # Required for running in Docker
-                    options.add_argument('--no-sandbox')  # Required for running in Docker
+                    options.add_argument('--no-sandbox')  # Required for running as root in Docker container
                     options.add_argument('--disable-dev-shm-usage')  # Required for running in Docker
 
                     

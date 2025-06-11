@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Resetting Chrome Profile Directory
-echo "Resetting Chrome Profile Directory"
-rm -R chrome_profiles
-mkdir chrome_profiles
-cp -R chrome_profiles_backup/* chrome_profiles/
-chmod -R +rwx chrome_profiles/
 
 # Start Xvfb
 echo "Starting Xvfb..."
@@ -45,5 +39,5 @@ echo "nameserver $GATEWAY_IP" > /etc/resolv.conf
 
 # Run the Python script (-u option to unbuffer the output)
 echo "Running Python script..."
-python -u src/scenario.py scenarios_2025/2025_gmail_session_adblock.json
+python -u src/scenario.py scenarios_2025/*.json
 #python -u src/topnews.py noadblock

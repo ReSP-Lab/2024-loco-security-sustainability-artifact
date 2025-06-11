@@ -321,7 +321,7 @@ class MySolutionSession(Session):
         
         while True:
             # Get all current window handles
-            windows = self.driver.window_handles            
+            windows = self.driver.window_handles           
             for window in windows:
                 self.driver.switch_to.window(window)
                 if 'mailvelope' in self.driver.title.lower():
