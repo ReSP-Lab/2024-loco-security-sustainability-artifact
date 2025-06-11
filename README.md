@@ -217,7 +217,7 @@ We provide the notebooks used to preprocess and analyze the data collected for t
 
 The preprocessed data is also included in the repository for convenience:
 
-- [`2025_data.csv`](notebook/2025_data.csv): Contains the preprocessed data for the scenarios executed during the study.
+- [`2025_data.csv`](notebook/2025_data_analysis.csv): Contains the preprocessed data for the scenarios executed during the study.
 - [`2025_topnews_data.csv`](notebook/2025_topnews_data.csv): Contains the preprocessed data for the top news experiments.
 
 ### Usage
@@ -238,8 +238,8 @@ pip install -r requirements.txt
 
 3. Open the provided Jupyter notebooks:
 
-   - [`analysis_notebook.ipynb`](notebook/analysis_notebook.ipynb): Main notebook for analysing the collected data.
-   - [`topnews_analysis.ipynb`](notebook/topnews_analysis.ipynb): Notebook for analysing `adblocking effect on mainstream websites` experiment.
+   - [`analysis_notebook.ipynb`](notebook/2025_data_analysis.ipynb): Main notebook for analysing the collected data during email services usage.
+   - [`topnews_analysis.ipynb`](notebook/2025_topnews_data_analysis.ipynb): Notebook for analysing `adblocking effect on mainstream websites` experiment (validating Pesari et al. experiment).
 
    To open a notebook, run:
 
