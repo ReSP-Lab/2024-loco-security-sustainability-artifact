@@ -123,6 +123,31 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
 - **compose.yaml**: Docker Compose file for easy container launch.
 - **usage_scenario.yml**: Used by the Green Metric Tool (GMT) to orchestrate the container and monitor energy/traffic, similar to a Compose file.
 
+...
+## Running the Automation Tool
+
+To run the automation tool using the scenarios defined in [`scenarios_2025`](simulator/scenarios_2025):
+
+- **Option 1:** Use Docker Compose  
+  Make sure that [`entrypoint.sh`](simulator/entrypoint.sh) specifies the correct scenario file, for example:
+  ```bash
+  python -u src/scenario.py scenarios_2025/<your_scenario>.json
+  ```
+  Then, from inside the `simulator/` directory, run:
+  ```sh
+  docker compose up
+  ```
+
+- **Option 2:** Run all scenarios for debugging  
+  Make the debug script executable and run it:
+  ```sh
+  chmod +x debug.sh
+  ./debug.sh
+  ```
+  This will sequentially run the tool on every scenario JSON file in [`scenarios_2025`](simulator/scenarios_2025).
+
 ---
+
+
 
 For any further details, please refer to the source code and comments within the repository.
