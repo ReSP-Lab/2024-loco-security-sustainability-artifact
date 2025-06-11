@@ -6,7 +6,7 @@ The entire project is designed and tested for Intel x86_64/amd64 architectures. 
 
 ---
 
-## Self-Hosted Solution: Installation Guide
+## 1) Self-Hosted Solution: Installation Guide
 
 ### 1. Clone the Repository
 
@@ -62,7 +62,7 @@ Open your browser and navigate to [https://localhost](https://localhost). You ca
 
 ---
 
-## Automation Tool (`simulator`) Overview
+## 2) Automation Tool (`simulator`) Overview
 
 The `simulator` folder contains an automation tool for running and measuring email scenarios on various webmail providers. It is designed to be run in a Docker container and orchestrated for reproducible, automated experiments.
 
@@ -150,7 +150,7 @@ For further details, refer to the comments and documentation within the scripts.
 
 ---
 
-## Monitoring Automated Scenarios with the Green Metric Tool (GMT)
+## 3) Monitoring Automated Scenarios with the Green Metric Tool (GMT)
 
 To monitor the automated scenarios and measure their environmental impact, we use the [Green Metric Tool (GMT)](https://docs.green-coding.io/docs/installation/installation-linux/). Follow the steps below to set up and use GMT for monitoring:
 
@@ -163,14 +163,14 @@ To enable monitoring, you need to activate the metric providers in the `config.y
 We provide an example configuration file, [`config.yaml.example`](gmt/config.yaml.example), that we used for our experiments. You can use it as a reference to configure your `config.yaml`.
 
 ### 3. Start the GMT Container
-Once GMT is installed and configured, start the GMT container using Docker Compose. Refer to the [GMT documentation](https://docs.green-coding.io/docs/installation/installation-linux/) for detailed instructions.
+Once GMT is installed and configured, start the GMT containers using Docker Compose. Refer to the [GMT documentation](https://docs.green-coding.io/docs/installation/installation-linux/) for detailed instructions.
 
 ### 4. Run the Automation Tool with GMT Monitoring
-We provide a script, [`measure_scenarios.sh`](GMT/measure_scenarios.sh), to automate the process of running the scenarios and monitoring them with GMT. Follow these steps:
+We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to automate the process of running the scenarios and monitoring them with GMT. Follow these steps:
 
 1. Make the script executable:
    ```bash
-   chmod +x GMT/measure_scenarios.sh
+   chmod +x gmt/measure_scenarios.sh
    ```
 
 2. Run the script with the required arguments:
@@ -197,7 +197,7 @@ For further details, refer to the GMT documentation and the provided example fil
 
 ---
 
-## Data Preprocessing and Analysis
+## 4) Data Preprocessing and Analysis
 
 We provide the notebooks used to preprocess and analyze the data collected for this study. These notebooks are located in the `notebook` folder of this repository. They include all the steps required to clean, transform, and analyze the raw data collected during the experiments.
 
