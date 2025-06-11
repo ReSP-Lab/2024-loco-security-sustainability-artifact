@@ -6,7 +6,7 @@ for i in {1..1}
 do
 
 	# Loop through each .json file in the scenarios directory
-	for filepath in $(dirname "$0")/*.json
+	for filepath in $(dirname "$0")/scenarios_2025/*.json
 	do
 
 		# Extract the filename from the path

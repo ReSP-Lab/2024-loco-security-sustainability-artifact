@@ -39,5 +39,5 @@ echo "nameserver $GATEWAY_IP" > /etc/resolv.conf
 
 # Run the Python script (-u option to unbuffer the output)
 echo "Running Python script..."
-python -u src/scenario.py scenarios_2025/*.json
+python -u src/scenario.py scenarios_2025/2025_mysolution_session_noadblock_pgp.json
 #python -u src/topnews.py noadblock
