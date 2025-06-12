@@ -11,24 +11,26 @@ services:
           IS_MEASURED: "true"
           SEED: 123
         shell: "bash"
-        folder-destination: "/tmp"
+        folder-destination: "/mount_point"
         setup-commands:
 
-            # Copy the entrypoint script and the source code from /tmp to the container's app/ folder
-            # The GMT doesn't allow to write in mounted volumes (which is tmp/ here).
+            # Copy the setup and entrypoint scripts and the source code from /mount_point to the container's app/ folder
+            # The GMT doesn't allow to write in mounted volumes (which is /mount_point here).
             - echo "Copying entrypoint script and source code to /app directory"
-            - cp /tmp/entrypoint.sh /app/
-            - cp -R /tmp/src/ /app/
-            - cp -R /tmp/scenarios_2025/ /app/
-            - cp -R /tmp/emails_answers/ /app/
+            - cp /mount_point/setup.sh /app/
+            - cp /mount_point/entrypoint.sh /app/
+            - cp -R /mount_point/src/ /app/
+            - cp -R /mount_point/scenarios_2025/ /app/
+            - cp -R /mount_point/emails_answers/ /app/
 
             # Configure the container with the entrypoint script
             # [--use-host-as-dns] : Use this if Pi-Hole is running on host. Remove if no DNS service is running on host
             # [--send-gui-to-vnc] : Use this if you want to send the GUI to a VNC server.
             - echo "Configuring the container with the entrypoint script"
-            - /app/setup.sh \
-              --use-host-as-dns \ 
+            - /app/setup.sh
+              --use-host-as-dns
               --send-gui-to-vnc
+            - ls /app
 
         command: "bash"
 

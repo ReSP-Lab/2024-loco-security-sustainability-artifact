@@ -99,8 +99,9 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
     - **CONTACTS**: List of contacts (email addresses) the user can send mail to and read/respond mail from. **Note:** To respond to a contact, a corresponding `emails_answers/name_surname_answers.csv` must exist.
     - **PROVIDER**: The name of the provider (e.g., `'outlook'`, `'gmail'`, `'proton'`, `'my_solution'`).
     - **BROWSER**: The browser to use (currently only `'chrome'` is supported by default; to use another browser, it must be installed in the simulator container and a corresponding case must be added in `src/sessions.py`).
-    - **ADBLOCK**: `'true'` or `'false'` to specify whether to use an adblocker extension within the container.  
+    - **ADBLOCK**: `'true'` or `'false'` to specify whether to use an adblocker extension within the container.
       > **Note:** For our study, we used PiHole, an external network adblocker running on the host (not in the container). Therefore, this parameter was set to `'false'`.
+      >
     - **UNTRACKED**: `'true'` or `'false'` to specify whether to use a privacy-focused browser profile.
     - **PGP**: `'true'` or `'false'` to specify whether to use PGP encryption (only relevant for the self-hosted solution).
     - **TIME_LIMIT**: The time limit (in minutes) for the scenario (limits the total duration of the scenario).
@@ -113,18 +114,43 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
 #### 3. Utility Files
 
 - **Dockerfile**: Builds the `jkayembe/simulator` image (Python, Selenium, Chromium 132.0.6834.110).
-- **entrypoint.sh**: Entrypoint script for the container.
+- **setup.sh**: Configuration script for the container.
 
-  - Starts Xvfb (virtual display) and x11vnc (VNC server).
+  - Starts Xvfb (virtual display).
+  - Starts the x11vnc (VNC server) if option `--send-gui-to-vnc` is passed to the script
   - Detects the Docker gateway IP and adds it to `/etc/hosts` as `my-solution.com` (for accessing the self-hosted mail solution).
-  - Sets the DNS to the gateway IP (enables PiHole adblocker testing). **This needs to be removed if no DNS service is running on the host**.
-  - Runs the Python automation script.
-- **debug.sh**: Script to run the automation for every scenario in `scenarios_2025/`.
+  - Sets the DNS to the gateway IP (enables PiHole adblocker testing) if the script is passed the option `--use-host-as-dns`. **The option needs needs not to be passed if no DNS service is running on the host**.
+- **entrypoint.sh**:
 
-  - For debugging: launches Xvfb and x11vnc so you can view the automated browser via VNC.
-  - Tested with `tigervnc`, but any VNC client will work (connect to `localhost:5900`). Adjust the `xtigervncviewer localhost::5900 &` line as needed.
-- **compose.yaml**: Docker Compose file for easy container launch.
+  - Runs the Python automation script. It is used to serve as the entrypoint in the compose.yaml (or in the usage_scenario.yaml when using the GMT)
+- **debug.sh**: A script designed to sequentially run the automation tool for every scenario JSON file located in `scenarios_2025/`.
+
+  - **Purpose**: Primarily used for debugging and testing the automation tool. It allows you to visually monitor the automated browser actions via a VNC client.
+  - **How It Works**:
+    - Launches the TigerVNC Client (`xtigervncviewer`) to enable viewing the browser automation in real-time. The VNC server runs on `localhost:5900`. You can use any VNC client to connect (e.g., `tigervnc`).
+    - Dynamically updates the `entrypoint.sh` file to specify the scenario being executed.
+    - Starts the Docker containers, runs the automation tool, and then shuts down the containers after execution.
+  - **Customization**: If you prefer a different VNC client, modify the `xtigervncviewer localhost::5900 &` line in the script.
+  - **Usage**: Make the script executable (`chmod +x debug.sh`) and run it directly to execute all scenarios in the `scenarios_2025/` folder.
+
+This script is particularly useful for debugging scenarios and ensuring the automation tool behaves as expected before running large-scale experiments.
+
+- **compose.yaml**: The Docker Compose file streamlines container management for the simulator. Key features include:
+
+  - **Custom Network**: Isolates the simulator with a dedicated bridge network and static IP.
+  - **Port Mapping**: Exposes the VNC server (`5900`) for GUI debugging.
+  - **Environment Variables**: Configures runtime parameters like `IS_MEASURED` and `SEED`.
+  - **Volume Mounts**: Links host scripts, source code, and data to the container.
+  - **Startup Commands**: Runs setup scripts and launches the automation tool.
+
+  This setup ensures a consistent and efficient environment for running simulations.
 - **usage_scenario.yml**: Used by the Green Metric Tool (GMT) to orchestrate the container and monitor energy/traffic, similar to a Compose file.
+
+  > **Note:** The `setup.sh` script supports the following options:
+  >
+  > - `--use-host-as-dns`: Configures the container to use the host as a DNS server. This is useful when running PiHole or other DNS services on the host.
+  > - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for debugging purposes.
+  >
 
 ...
 
@@ -132,6 +158,13 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
 
 To run the automation tool using the scenarios defined in [`scenarios_2025`](simulator/scenarios_2025):
 
+- **Preliminary Step: Make Scripts Executable**
+
+  Before running the automation tool, ensure that the required scripts are executable:
+
+  ```sh
+  chmod +x simulator/setup.sh simulator/entrypoint.sh simulator/debug.sh
+  ```
 - **Option 1:** Use Docker Compose
   Make sure that [`entrypoint.sh`](simulator/entrypoint.sh) specifies the correct scenario file, for example:
 
@@ -139,16 +172,19 @@ To run the automation tool using the scenarios defined in [`scenarios_2025`](sim
   python -u src/scenario.py scenarios_2025/<your_scenario>.json
   ```
 
+  In the [`compose.yaml`](simulator/compose.yaml)  file, choose to launch or not the [`setup.sh`](simulator/setup.sh) script with additional optionsThe `setup.sh` script supports the following options:
+
+  - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for real-time monitoring.
+  - `--use-host-as-dns`: Configures the container to use the host as a DNS server, useful when running PiHole or other DNS services on the host.
+
   Then, from inside the `simulator/` directory, run:
 
   ```sh
   docker compose up
   ```
-- **Option 2:** Run all scenarios for debugging
-  Make the debug script executable and run it:
+- **Option 2:** Choose the right options for the `setup.sh` in the [`compose.yaml`](simulator/compose.yaml) file as in option 1, then run :
 
   ```sh
-  chmod +x debug.sh
   ./debug.sh
   ```
 
@@ -176,6 +212,13 @@ We provide an example configuration file, [`config.yaml.example`](gmt/config.yam
 
 Once GMT is installed and configured, start the GMT containers using Docker Compose. Refer to the [GMT documentation](https://docs.green-coding.io/docs/installation/installation-linux/) for detailed instructions.
 
+### 4. Select setup.sh Options
+
+The GMT use the `usage_scenario.yaml` as a kind of compose file to orchestrate the container containing the processes to be monitored. In the `usage_scenario.yaml` file, choose to launch or not the [`setup.sh`](simulator/setup.sh) script with additional options
+The `setup.sh` script supports the following options:
+
+- `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for real-time monitoring.
+- `--use-host-as-dns`: Configures the container to use the host as a DNS server, useful when running PiHole or other DNS services on the host.
 ### 4. Run the Automation Tool with GMT Monitoring
 
 We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to automate the process of running the scenarios and monitoring them with GMT. Follow these steps:
@@ -188,9 +231,9 @@ We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to auto
 2. Run the script with the required arguments:
 
    ```bash
-   ./measure_scenarios.sh <path_to_2024_loco_security_sustainability_artifact> <path_to_green_metric_tool>
+   ./measure_scenarios.sh <number_of_iterations> <path_to_2024_loco_security_sustainability_artifact> <path_to_green_metric_tool>
    ```
-
+   - `<number_of_iterations>`: Number of times the test will be launched.
    - `<path_to_2024_loco_security_sustainability_artifact>`: The path to this repository.
    - `<path_to_green_metric_tool>`: The path to the installed GMT directory.
 
@@ -203,10 +246,9 @@ This script will:
 ### Example Usage
 
 ```bash
-./measure_scenarios.sh /home/jason/2024-loco-security-sustainability-artifact /home/jason/green-metric-tool
+./measure_scenarios.sh 10 ~/2024-loco-security-sustainability-artifact ~/green-metric-tool
 ```
-
-This will monitor the automated scenarios and save the results in GMT database.
+This will monitor the automated scenarios 10 times each and save the results in GMT database.
 
 For further details, refer to the GMT documentation and the provided example files in this repository.
 
@@ -230,7 +272,6 @@ The preprocessed data is also included in the repository for convenience:
 ```sh
 cd notebook
 ```
-
 2. Create a Python virtual environment and install the required dependencies:
 
 ```sh
@@ -238,7 +279,6 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-
 3. Open the provided Jupyter notebooks:
 
    - [`analysis_notebook.ipynb`](notebook/2025_data_analysis.ipynb): Main notebook for analysing the collected data during email services usage.
