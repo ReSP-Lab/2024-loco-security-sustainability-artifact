@@ -160,6 +160,12 @@ To run the automation tool using the scenarios defined in [`scenarios_2025`](sim
 
 - **Preliminary Step: Make Scripts Executable**
 
+  Navigate to the simulator folder:
+  
+  ```sh
+  cd simulator/
+  ```
+
   Before running the automation tool, ensure that the required scripts are executable:
 
   ```sh
