@@ -99,7 +99,8 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
     - **CONTACTS**: List of contacts (email addresses) the user can send mail to and read/respond mail from. **Note:** To respond to a contact, a corresponding `emails_answers/name_surname_answers.csv` must exist.
     - **PROVIDER**: The name of the provider (e.g., `'outlook'`, `'gmail'`, `'proton'`, `'my_solution'`).
     - **BROWSER**: The browser to use (currently only `'chrome'` is supported by default; to use another browser, it must be installed in the simulator container and a corresponding case must be added in `src/sessions.py`).
-    - **ADBLOCK**: `'true'` or `'false'` to specify whether to use an adblocker extension within the container.
+    - **ADBLOCK**: `'true'` or `'false'` to specify whether to use an adblocker extension within the container.  
+      > **Note:** For our study, we used PiHole, an external network adblocker running on the host (not in the container). Therefore, this parameter was set to `'false'`.
     - **UNTRACKED**: `'true'` or `'false'` to specify whether to use a privacy-focused browser profile.
     - **PGP**: `'true'` or `'false'` to specify whether to use PGP encryption (only relevant for the self-hosted solution).
     - **TIME_LIMIT**: The time limit (in minutes) for the scenario (limits the total duration of the scenario).
