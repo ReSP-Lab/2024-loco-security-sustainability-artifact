@@ -70,7 +70,7 @@ The `simulator` folder contains an automation tool for running and measuring ema
 
 ### Folder Structure
 
-#### 1. Folders Included in the Simulator Docker Image (for transparency)
+#### 1. Folders Included in the Simulator Docker Image
 
 If you want to modify any of these files (e.g., to change the Chrome profiles, add attachments, or update extensions), you can do so and then mount the modified folder into the container using Docker Compose or the `usage_scenario.yaml` (if using the Green Metric Tool). For example, to use a custom Chrome profile, mount it as `./chrome_profiles:/app/chrome_profiles`.
 
