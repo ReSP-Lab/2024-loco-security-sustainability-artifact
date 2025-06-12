@@ -11,7 +11,7 @@ The entire project is designed and tested for Intel x86_64/amd64 architectures. 
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/2024-loco-security-sustainability-artifact.git
+git clone https://github.com/ReSP-Lab/2024-loco-security-sustainability-artifact.git
 cd 2024-loco-security-sustainability-artifact
 ```
 
@@ -41,16 +41,15 @@ Once the containers are running, you need to create email accounts:
 
 1. Enter the mailserver container:
 
-    ```sh
-    docker exec -it mailserver bash
-    ```
-
+   ```sh
+   docker exec -it mailserver bash
+   ```
 2. Inside the container, create email addresses (replace `xxx@my-solution.com` with your desired addresses; use the domain `my-solution.com`):
 
-    ```sh
-    setup email add user1@my-solution.com
-    setup email add user2@my-solution.com
-    ```
+   ```sh
+   setup email add user1@my-solution.com
+   setup email add user2@my-solution.com
+   ```
 
    Set a password for each address when prompted.
 
@@ -120,32 +119,38 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
   - Sets the DNS to the gateway IP (enables PiHole adblocker testing). **This needs to be removed if no DNS service is running on the host**.
   - Runs the Python automation script.
 - **debug.sh**: Script to run the automation for every scenario in `scenarios_2025/`.
+
   - For debugging: launches Xvfb and x11vnc so you can view the automated browser via VNC.
   - Tested with `tigervnc`, but any VNC client will work (connect to `localhost:5900`). Adjust the `xtigervncviewer localhost::5900 &` line as needed.
 - **compose.yaml**: Docker Compose file for easy container launch.
 - **usage_scenario.yml**: Used by the Green Metric Tool (GMT) to orchestrate the container and monitor energy/traffic, similar to a Compose file.
 
 ...
+
 ## Running the Automation Tool
 
 To run the automation tool using the scenarios defined in [`scenarios_2025`](simulator/scenarios_2025):
 
-- **Option 1:** Use Docker Compose  
+- **Option 1:** Use Docker Compose
   Make sure that [`entrypoint.sh`](simulator/entrypoint.sh) specifies the correct scenario file, for example:
+
   ```bash
   python -u src/scenario.py scenarios_2025/<your_scenario>.json
   ```
+
   Then, from inside the `simulator/` directory, run:
+
   ```sh
   docker compose up
   ```
-
-- **Option 2:** Run all scenarios for debugging  
+- **Option 2:** Run all scenarios for debugging
   Make the debug script executable and run it:
+
   ```sh
   chmod +x debug.sh
   ./debug.sh
   ```
+
   This will sequentially run the tool on every scenario JSON file in [`scenarios_2025`](simulator/scenarios_2025).
 
 For further details, refer to the comments and documentation within the scripts.
@@ -157,25 +162,30 @@ For further details, refer to the comments and documentation within the scripts.
 To monitor the automated scenarios and measure their environmental impact, we use the [Green Metric Tool (GMT)](https://docs.green-coding.io/docs/installation/installation-linux/). Follow the steps below to set up and use GMT for monitoring:
 
 ### 1. Install the Green Metric Tool
+
 Follow the [official installation guide](https://docs.green-coding.io/docs/installation/installation-linux/) to install GMT on your system. Ensure that all dependencies are installed and the tool is properly configured.
 
 ### 2. Configure Metric Providers
+
 To enable monitoring, you need to activate the metric providers in the `config.yaml` file located in the GMT folder. Uncomment the relevant sections in the file to enable the desired metrics.
 
 We provide an example configuration file, [`config.yaml.example`](gmt/config.yaml.example), that we used for our experiments. You can use it as a reference to configure your `config.yaml`.
 
 ### 3. Start the GMT Container
+
 Once GMT is installed and configured, start the GMT containers using Docker Compose. Refer to the [GMT documentation](https://docs.green-coding.io/docs/installation/installation-linux/) for detailed instructions.
 
 ### 4. Run the Automation Tool with GMT Monitoring
+
 We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to automate the process of running the scenarios and monitoring them with GMT. Follow these steps:
 
 1. Make the script executable:
+
    ```bash
    chmod +x gmt/measure_scenarios.sh
    ```
-
 2. Run the script with the required arguments:
+
    ```bash
    ./measure_scenarios.sh <path_to_2024_loco_security_sustainability_artifact> <path_to_green_metric_tool>
    ```
@@ -184,11 +194,13 @@ We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to auto
    - `<path_to_green_metric_tool>`: The path to the installed GMT directory.
 
 This script will:
+
 - Loop through all `.json` scenario files in the `scenarios_2025` directory.
 - Update the `usage_scenario.yml` file to run each scenario.
 - Launch the GMT monitoring tool and execute the scenarios.
 
 ### Example Usage
+
 ```bash
 ./measure_scenarios.sh /home/jason/2024-loco-security-sustainability-artifact /home/jason/green-metric-tool
 ```
@@ -204,31 +216,38 @@ For further details, refer to the GMT documentation and the provided example fil
 We provide the notebooks used to preprocess and analyze the data collected for this study. These notebooks are located in the `notebook` folder of this repository. They include all the steps required to clean, transform, and analyze the raw data collected during the experiments.
 
 ### Preprocessed Data
+
 The preprocessed data is also included in the repository for convenience:
-- [`2025_data.csv`](notebook/2025_data.csv): Contains the preprocessed data for the scenarios executed during the study.
+
+- [`2025_data.csv`](notebook/2025_data_analysis.csv): Contains the preprocessed data for the scenarios executed during the study.
 - [`2025_topnews_data.csv`](notebook/2025_topnews_data.csv): Contains the preprocessed data for the top news experiments.
 
 ### Usage
+
 1. Navigate to the `notebook` folder:
-  ```sh
-  cd notebook
-  ```
+
+```sh
+cd notebook
+```
 
 2. Create a Python virtual environment and install the required dependencies:
-  ```sh
-  python3 -m venv venv
-  source venv/bin/activate
-  pip install -r requirements.txt
-  ```
+
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 3. Open the provided Jupyter notebooks:
 
-    - [`analysis_notebook.ipynb`](notebook/analysis_notebook.ipynb): Main notebook for analysing the collected data.
-    - [`topnews_analysis.ipynb`](notebook/topnews_analysis.ipynb): Notebook for analysing `adblocking effect on mainstream websites` experiment.
+   - [`analysis_notebook.ipynb`](notebook/2025_data_analysis.ipynb): Main notebook for analysing the collected data during email services usage.
+   - [`topnews_analysis.ipynb`](notebook/2025_topnews_data_analysis.ipynb): Notebook for analysing `adblocking effect on mainstream websites` experiment (validating Pesari et al. experiment).
 
-    To open a notebook, run:
-    ```sh
-    jupyter notebook
-    ```
+   To open a notebook, run:
+
+   ```sh
+   jupyter notebook
+   ```
 
 These notebooks provide insights into the environmental impact of advertisements and encryption in webmail solutions, as well as the energy and traffic profiles of functional units across different providers.
 
