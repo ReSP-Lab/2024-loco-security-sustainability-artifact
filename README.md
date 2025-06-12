@@ -157,11 +157,11 @@ This script is particularly useful for debugging scenarios and ensuring the auto
   This setup ensures a consistent and efficient environment for running simulations.
 - **usage_scenario.yml**: Used by the Green Metric Tool (GMT) to orchestrate the container and monitor energy/traffic, similar to a Compose file.
 
-  > **Note:** The `setup.sh` script supports the following options:
-  >
-  > - `--use-host-as-dns`: Configures the container to use the host as a DNS server. This is useful when running PiHole or other DNS services on the host.
-  > - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for debugging purposes.
-  >
+> **Note:** Both `compose.yaml` and the `usage_scenario` invoke the `setup.sh` script which supports the following options:
+>
+> - `--use-host-as-dns`: Configures the container to use the host as a DNS server. This is useful when running PiHole or other DNS services on the host.
+> - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for debugging purposes.
+>
 
 ...
 
