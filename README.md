@@ -241,7 +241,7 @@ We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to auto
 
    ```bash
    cd gmt
-   chmod +x gmt/measure_scenarios.sh
+   chmod +x measure_scenarios.sh
    ```
 2. Run the script with the required arguments:
 
