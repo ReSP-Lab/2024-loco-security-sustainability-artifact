@@ -238,7 +238,7 @@ Once GMT is installed and configured, start the GMT containers using Docker Comp
 
 ### 4. Select setup.sh Options
 
-The GMT use the `usage_scenario.yaml` as a kind of compose file to orchestrate the container containing the processes to be monitored. In the `usage_scenario.yaml` file, choose to launch or not the [`setup.sh`](simulator/setup.sh) script with additional options
+The GMT use the [`usage_scenario.yaml`](simulator/usage_scenario.yml) as a kind of compose file to orchestrate the container containing the processes to be monitored. In the `usage_scenario.yaml` file, choose to launch or not the [`setup.sh`](simulator/setup.sh) script with additional options
 The `setup.sh` script supports the following options:
 
 - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for real-time monitoring.
