@@ -163,7 +163,7 @@ This script is particularly useful for debugging scenarios and ensuring the auto
 > - `--send-gui-to-vnc`: Redirects the GUI to `localhost:5900` through a VNC server for debugging purposes.
 >
 
-...
+---
 
 ## Running the Automation Tool
 
