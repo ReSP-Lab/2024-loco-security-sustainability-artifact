@@ -4,6 +4,14 @@ This repository contains the workspace for an empirical study on the environment
 
 The entire project is designed and tested for Intel x86_64/amd64 architectures. **Docker** is required to run the self-hosted solution. You can find Docker installation instructions [here](https://docs.docker.com/get-docker/).
 
+  > **Note:** The email accounts used in the automation tool must be properly configured. For example:
+  > - To perform the action of reading an email without errors, an email must already be present in the mailbox.
+  > - To respond to an email, the email must originate from a user with corresponding files in the `emails_answers` folder.
+  >
+  > Additionally, the HTML pages of the tested providers may evolve over time. This could render the sequence of actions required to perform a functional unit (e.g., reading or sending an email) and the HTML selectors in the `ProviderSession.py` files used by Selenium obsolete. It is the reader's responsibility to update these as needed.
+  >
+  > Errors occurring during simulations might also cause the GMT tool to fail. Furthermore, the notebooks used for preprocessing the data collected during GMT monitoring are designed to ignore tests where errors occurred.
+
 ---
 
 ## 1) Self-Hosted Solution: Installation Guide
@@ -195,14 +203,6 @@ To run the automation tool using the scenarios defined in [`scenarios_2025`](sim
   ```
 
   This will sequentially run the tool on every scenario JSON file in [`scenarios_2025`](simulator/scenarios_2025).
-
-  > **Note:** The email accounts used in the automation tool must be properly configured. For example:
-  > - To perform the action of reading an email without errors, an email must already be present in the mailbox.
-  > - To respond to an email, the email must originate from a user with corresponding files in the `emails_answers` folder.
-  >
-  > Additionally, the HTML pages of the tested providers may evolve over time. This could render the sequence of actions required to perform a functional unit (e.g., reading or sending an email) and the HTML selectors in the `ProviderSession.py` files used by Selenium obsolete. It is the reader's responsibility to update these as needed.
-  >
-  > Errors occurring during simulations might also cause the GMT tool to fail. Furthermore, the notebooks used for preprocessing the data collected during GMT monitoring are designed to ignore tests where errors occurred.
 
 For further details, refer to the comments and documentation within the scripts.
 
