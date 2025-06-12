@@ -169,7 +169,7 @@ To run the automation tool using the scenarios defined in [`scenarios_2025`](sim
   Before running the automation tool, ensure that the required scripts are executable:
 
   ```sh
-  chmod +x simulator/setup.sh simulator/entrypoint.sh simulator/debug.sh
+  chmod +x setup.sh entrypoint.sh debug.sh
   ```
 - **Option 1:** Use Docker Compose
   Make sure that [`entrypoint.sh`](simulator/entrypoint.sh) specifies the correct scenario file, for example:
@@ -232,6 +232,7 @@ We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to auto
 1. Make the script executable:
 
    ```bash
+   cd gmt
    chmod +x gmt/measure_scenarios.sh
    ```
 2. Run the script with the required arguments:
@@ -240,13 +241,13 @@ We provide a script, [`measure_scenarios.sh`](gmt/measure_scenarios.sh), to auto
    ./measure_scenarios.sh <number_of_iterations> <path_to_2024_loco_security_sustainability_artifact> <path_to_green_metric_tool>
    ```
    - `<number_of_iterations>`: Number of times the test will be launched.
-   - `<path_to_2024_loco_security_sustainability_artifact>`: The path to this repository.
-   - `<path_to_green_metric_tool>`: The path to the installed GMT directory.
+   - `<path_to_2024_loco_security_sustainability_artifact>`: The absolute path to this repository.
+   - `<path_to_green_metric_tool>`: The absolute path to the installed GMT directory.
 
 This script will:
 
 - Loop through all `.json` scenario files in the `scenarios_2025` directory.
-- Update the `usage_scenario.yml` file to run each scenario.
+- Update the `entrypoint.sh` file to run each scenario.
 - Launch the GMT monitoring tool and execute the scenarios.
 
 ### Example Usage
