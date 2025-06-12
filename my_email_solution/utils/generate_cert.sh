@@ -5,9 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 FOLDER="$SCRIPT_DIR/../docker-data"
 
 # Delete old directory
-sudo rm -R $FOLDER/ca/ssl
-sudo rm -R $FOLDER/dms/config/ssl
-sudo rm -R $FOLDER/webmail/config/ssl
+rm -R $FOLDER/ca/ssl
+rm -R $FOLDER/dms/config/ssl
+rm -R $FOLDER/webmail/config/ssl
 
 # Create the required directory
 mkdir -p $FOLDER/ca/ssl
