@@ -8,7 +8,7 @@ The entire project is designed and tested for Intel x86_64/amd64 architectures. 
   > - To perform the action of reading an email without errors, an email must already be present in the mailbox.
   > - To respond to an email, the email must originate from a user with corresponding files in the `emails_answers` folder.
   >
-  > Additionally, the HTML pages of the tested providers may evolve over time. This could render the sequence of actions required to perform a functional unit (e.g., reading or sending an email) and the HTML selectors in the `ProviderSession.py` files used by Selenium obsolete. It is the reader's responsibility to update these as needed.
+  > Additionally, the HTML pages of the tested providers may evolve over time. This could render the sequence of actions required to perform a functional unit (e.g., reading or sending an email) and the HTML selectors in the `ProviderSession.py` files used by Selenium obsolete. This won't be maintained and is left for the reader to update as needed.
   >
   > Errors occurring during simulations might also cause the GMT tool to fail. Furthermore, the notebooks used for preprocessing the data collected during GMT monitoring are designed to ignore tests where errors occurred.
 
