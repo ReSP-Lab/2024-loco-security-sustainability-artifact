@@ -119,7 +119,7 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
   - Starts Xvfb (virtual display).
   - Starts the x11vnc (VNC server) if option `--send-gui-to-vnc` is passed to the script
   - Detects the Docker gateway IP and adds it to `/etc/hosts` as `my-solution.com` (for accessing the self-hosted mail solution).
-  - Sets the DNS to the gateway IP (enables PiHole adblocker testing) if the script is passed the option `--use-host-as-dns`. **The option needs needs not to be passed if no DNS service is running on the host**.
+  - Sets the DNS to the gateway IP (enables PiHole adblocker testing) if the script is passed the option `--use-host-as-dns`. **The option needs not to be passed if no DNS service is running on the host**.
 - **entrypoint.sh**:
 
   - Runs the Python automation script. It is used to serve as the entrypoint in the compose.yaml (or in the usage_scenario.yaml when using the GMT)
