@@ -27,4 +27,6 @@ services:
     working_dir: /app
 
     # Setup commands to prepare the container and launch the entrypoint script
+    # [--use-host-as-dns] : Use this if Pi-Hole is running on host. Remove if no DNS service is running on host
+    # [--send-gui-to-vnc] : Use this if you want to send the GUI to a VNC server.
     command: /bin/bash -c "/app/setup.sh --use-host-as-dns --send-gui-to-vnc && /app/entrypoint.sh"

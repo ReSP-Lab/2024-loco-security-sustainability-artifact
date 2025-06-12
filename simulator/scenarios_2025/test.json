@@ -11,7 +11,7 @@
               
     "PROVIDER": "gmail",
     "BROWSER": "chrome",
-    "ADBLOCK":"true",
+    "ADBLOCK":"false",
     "UNTRACKED":"true",
     "PGP":"false",
     "TIME_LIMIT": 2,
