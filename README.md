@@ -54,7 +54,9 @@ Once the containers are running, you need to create email accounts:
 
    Set a password for each address when prompted.
 
-> **Note:** You need at least two addresses to exchange emails. This setup is experimental and mimics real-life scenarios, but since you do not own the domain, sending emails to external domains will not work.
+> **Note 1:** You need at least two addresses to exchange emails. This setup is experimental and mimics real-life scenarios, but since you do not own the domain, sending emails to external domains will not work.
+
+> **Note 2:** In the container, the Mailvelope extension is pre-configured with an account and PGP public keys for `jason.kayembe@my-solution.com` and `marie.hupin@my-solution.com`. Use these addresses with the password `Azerty123` to ensure the automation tool has a working routine for using PGP encryption.
 
 ### 5. Test Access To the Webmail Interface
 
