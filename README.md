@@ -171,6 +171,13 @@ To run the automation tool using the scenarios defined in [`scenarios_2025`](sim
 
 - **Preliminary Step: Make Scripts Executable**
 
+  Install a VNC client to see the automated scenarios in action:
+
+  ```sh
+  apt update
+  apt install tigervnc-viewer
+  ```
+
   Navigate to the simulator folder:
   
   ```sh
