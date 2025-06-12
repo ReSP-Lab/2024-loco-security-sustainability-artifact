@@ -94,11 +94,14 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
 
 - **emails_answers/**: Contains CSV files with emails and answers for users. For an address `x.y@domain`, you must have `x_y_emails.csv` and `x_y_answers.csv` (same structure as existing files). To use a new address, copy and rename an existing user's files.
 - **src/**: Python scripts implementing the automation logic (using Selenium).
-  - To automate a new provider "A", create `ASession.py` (following the pattern of `OutlookSession.py`).
+  - To automate a new provider "Provider", create `ProviderSession.py` (following the pattern of `OutlookSession.py`).
   - To use your new session:
     - Import it in `src/scenario.py`.
     - Add a case in `Scenario.get_session()` to instantiate your session class when the provider matches.
     - Ensure any provider-specific constants/selectors are defined (especially in `src/constants.py`).
+    - **Important Note on GMT Integration**: The Green Metric Tool (GMT) uses timestamps in microseconds at the beginning of a print statement to log events in its database. This allows precise tracking of when a functional unit (e.g., sending an email) starts and ends. To ensure compatibility, a customised `print()` function has been defined in [`utils.py`](#file:utils.py-1-context), overriding the default `print()` function. 
+
+      Normally, no additional action is required since [`utils.py`](#file:utils.py-context) is already imported in [`scenario.py`](#file:scenario.py-1-context). However, if for any reason you need to bypass [`scenario.py`](#file:scenario.py-context) (e.g., to implement a different logic for action sequences or to test websites other than webmail), ensure that your `print()` statements are formatted as defined in [`utils.py`](#file:utils.py-context). This is crucial for GMT to accurately track your actions in its database.
 - **scenarios_2025/**: JSON files describing scenarios (functional units and account parameters).
   - Example parameters:
     - **USER**: The name of the user (e.g., "Jason Kayembe").

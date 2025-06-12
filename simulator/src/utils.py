@@ -12,7 +12,7 @@ import json
 from constants import *
 
 
-# Defines a per-thread customised print function
+# Defines a customised print function
 def GMT_print(*objects, sep=' ', end='\n', file=None, flush=False):
     '''
     This variant of print Add the timestamp at the frontend of each print so the GMT can place the logs on the graphs
