@@ -287,7 +287,7 @@ We provide the notebooks used to preprocess and analyze the data collected for t
 
 The preprocessed data is also included in the repository for convenience:
 
-- [`2025_data.csv`](notebook/2025_data_analysis.csv): Contains the preprocessed data for the scenarios executed during the study.
+- [`2025_data.csv`](notebook/2025_data.csv): Contains the preprocessed data for the scenarios executed during the study.
 - [`2025_topnews_data.csv`](notebook/2025_topnews_data.csv): Contains the preprocessed data for the top news experiments.
 
 ### Usage
