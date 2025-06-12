@@ -25,7 +25,7 @@ from constants import *
 
 
 class WebDriver():
-    def __init__(self, browser_name, adblock=False, untracked=False):
+    def __init__(self, browser_name, adblock=False, untracked=False, pgp=False):
         match browser_name:
             case CHROME:
                 try:
@@ -50,28 +50,19 @@ class WebDriver():
                     options.add_argument('--disable-dev-shm-usage')  # Required for running in Docker
 
                     
-                # If adblock is required load the extension
-                # if adblock:
-
-                #     adblock_extension_path = os.path.join(os.path.dirname(__file__), ADBLOCK_FOLDER)
-                #     options.add_argument(f"--load-extension={adblock_extension_path}")
+                # If adblock is required (adblock in the container) load the extension
+                if adblock:
+                     adblock_extension_path = os.path.join(os.path.dirname(__file__), ADBLOCK_FOLDER)
+                     options.add_argument(f"--load-extension={adblock_extension_path}")
                 
-                #If encryption is required, load mailvelope
-                if True:
-
+                # If PGP is required, load the extension
+                if pgp:
                     pgp_extension_path = os.path.join(os.path.dirname(__file__), PGP_FOLDER)
                     options.add_argument(f"--load-extension={pgp_extension_path}")
 
-                    
                 # Select the chrommium profile to allow or limit tracking
-                if untracked:
-                    profile = UNTRACKED_PROFILE
-                else:
-                    profile = TRACKED_PROFILE
-                if IS_MEASURED:
-                    profiles_dir = CONTAINER_CHROME_PROFILES
-                else : 
-                    profiles_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), CHROME_PROFILES))
+                profile = UNTRACKED_PROFILE if untracked else TRACKED_PROFILE
+                profiles_dir = CONTAINER_CHROME_PROFILES if IS_MEASURED else os.path.normpath(os.path.join(os.path.dirname(__file__), CHROME_PROFILES))
                 options.add_argument(f"user-data-dir={profiles_dir}")
                 options.add_argument(f'profile-directory={profile}')
 
@@ -81,7 +72,7 @@ class WebDriver():
                 # Initialize WebDriver with Chrome binary path and options
                 self.driver = webdriver.Chrome(options=options)
 
-                # if adblock: print("[INFO] : AdBlock extension is loaded.")
+                if adblock: print("[INFO] : AdBlock extension is loaded.")
                 print(f"[INFO] : {"Limited" if untracked else "Allowed"} tracking profile loaded.")
                
         # set Window Size
