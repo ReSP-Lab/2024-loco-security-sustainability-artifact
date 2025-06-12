@@ -95,7 +95,7 @@ class Session:
         self.start = time.time()
         self.time_limit = time_limit
         self.no_time_limit = no_time_limit
-        self.driver = WebDriver(browser_name, adblock, untracked).driver
+        self.driver = WebDriver(browser_name, adblock, untracked, pgp).driver
 
 
         self.stats = {  "login" : 0,
