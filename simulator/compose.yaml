@@ -19,9 +19,12 @@ services:
       IS_MEASURED: "false"
       SEED: "123"
     volumes:
-      - ./entrypoint.sh:/app/entrypoint.sh  # Mount the entrypoint script
-      - ./src:/app/src  # Mount simulator
+      - ./setup.sh:/app/setup.sh              # Mount the setup script
+      - ./entrypoint.sh:/app/entrypoint.sh    # Mount the entrypoint script
+      - ./src:/app/src                        # Mount simulator
       - ./scenarios_2025:/app/scenarios_2025  # Mount the scenarios directory
       - ./emails_answers:/app/emails_answers  # Mount the emails answers directory
     working_dir: /app
-    command: /app/entrypoint.sh
+
+    # Setup commands to prepare the container and launch the entrypoint script
+    command: /bin/bash -c "/app/setup.sh --use-host-as-dns --send-gui-to-vnc && /app/entrypoint.sh"

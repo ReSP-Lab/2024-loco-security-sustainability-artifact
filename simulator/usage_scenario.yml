@@ -11,27 +11,25 @@ services:
           IS_MEASURED: "true"
           SEED: 123
         shell: "bash"
+        folder-destination: "/tmp"
         setup-commands:
-            # Change the chrome profile directory to avoid changing the backup profile folder
-            - cp -R /app/chrome_profiles/ /chrome_profiles
 
-            # Add host ip for my-solution.com and as the dns server (to use pihole adblocker as dns)
-             # Extract the hexadecimal gateway IP
-            - "GATEWAY_HEX=$(awk '$2 == \"00000000\" { print $3 }' /proc/net/route) ;
-               GATEWAY_IP=$(printf \"%d.%d.%d.%d\n\"
-               $((0x${GATEWAY_HEX:6:2}))
-               $((0x${GATEWAY_HEX:4:2}))
-               $((0x${GATEWAY_HEX:2:2}))
-               $((0x${GATEWAY_HEX:0:2}))) ;
-               echo \"$GATEWAY_IP my-solution.com\" >> /etc/hosts ;
-               echo \"nameserver $GATEWAY_IP\" > /etc/resolv.conf "
+            # Copy the entrypoint script and the source code from /tmp to the container's app/ folder
+            # The GMT doesn't allow to write in mounted volumes (which is tmp/ here).
+            - echo "Copying entrypoint script and source code to /app directory"
+            - cp /tmp/entrypoint.sh /app/
+            - cp -R /tmp/src/ /app/
+            - cp -R /tmp/scenarios_2025/ /app/
+            - cp -R /tmp/emails_answers/ /app/
 
-            # X Server : simulate graphic card in memory. (The html pages are unpredictable in headless mode)
-            - Xvfb :0 -screen 0 1296x736x16 & 
+            # Configure the container with the entrypoint script
+            # [--use-host-as-dns] : Use this if Pi-Hole is running on host. Remove if no DNS service is running on host
+            # [--send-gui-to-vnc] : Use this if you want to send the GUI to a VNC server.
+            - echo "Configuring the container with the entrypoint script"
+            - /app/setup.sh \
+              --use-host-as-dns \ 
+              --send-gui-to-vnc
 
-            # VNC server : It connects to the X server and send the GUI on port 5900. Uncomment the next line for Debugging
-            #- x11vnc -forever -create -display :0 -rfbport 5900 -bg -nopw
-        folder-destination: "/app"
         command: "bash"
 
 flow:
@@ -39,7 +37,7 @@ flow:
       container: simulator
       commands:
         - type: console
-          command: python src/scenario.py scenarios_2025/2025_proton_session_adblock.json
+          command: /app/entrypoint.sh
           note: Starting the Python Scenario Script
           log-stdout: true
           read-notes-stdout: true # This is needed for the GMT to save the logs along with their timestamps. This will later be used to map energy and traffic data to specific events in the scenario.
