@@ -257,7 +257,7 @@ This script will:
 ```
 This will monitor the automated scenarios 10 times each and save the results in GMT database.
 
-For further details, refer to the GMT documentation and the provided example files in this repository.
+For further details, refer to the [GMT documentation](https://docs.green-coding.io/docs/prologue/introduction/) and the provided example files in this repository.
 
 ---
 
