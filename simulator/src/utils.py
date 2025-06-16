@@ -115,6 +115,7 @@ def handle_arguments():
     adblock = scenario_data[ADBLOCK]
     untracked = scenario_data[UNTRACKED]
     pgp = scenario_data[PGP]
+    emulated_latency = scenario_data[EMULATED_LATENCY]
     time_limit = scenario_data[TIME_LIMIT]
     n_session = scenario_data[N_SESSION]
     n_mail_to_send = scenario_data[N_MAIL_SENT]
@@ -164,6 +165,12 @@ def handle_arguments():
     if pgp not in ['true', 'false']:
         print(f"Invalid scenario parameter PGP: Must be 'true' or 'false.")
         sys.exit(1)
+    if emulated_latency not in ['false', 'on_site', 'remote']:
+        print(f"Invalid scenario parameter EMULATED_LATENCY: Must be 'false', 'on_site' or 'remote'.")
+        sys.exit(1)
+    else : 
+        if emulated_latency == 'false':
+            emulated_latency = False
 
     scenario_params = ( user,
                         user_address,
@@ -174,6 +181,7 @@ def handle_arguments():
                         adblock == 'true',
                         untracked == 'true',
                         pgp == 'true',
+                        emulated_latency,
                         time_limit,
                         n_session,
                         n_mail_to_send,
