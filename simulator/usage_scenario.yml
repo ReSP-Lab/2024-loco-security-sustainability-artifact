@@ -29,8 +29,7 @@ services:
             - echo "Configuring the container with the entrypoint script"
             - /app/setup.sh
               --use-host-as-dns
-              --send-gui-to-vnc
-            - ls /app
+              #--send-gui-to-vnc
 
         command: "bash"
 

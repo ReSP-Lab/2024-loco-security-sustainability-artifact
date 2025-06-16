@@ -45,8 +45,8 @@ MAILVELOPE_REPLY_EDITOR = (By.XPATH, "//*[@id='root']/textarea")
 
 class MySolutionSession(Session):
 
-    def __init__(self, user_address, user_psw, browser_name, adblock, untracked, pgp, time_limit=TIME_LIMIT, no_time_limit=False):
-        super().__init__(user_address, user_psw, browser_name, adblock, untracked, pgp, time_limit, no_time_limit)
+    def __init__(self, user_address, user_psw, browser_name, adblock, untracked, pgp, emulated_latency, time_limit=TIME_LIMIT, no_time_limit=False):
+        super().__init__(user_address, user_psw, browser_name, adblock, untracked, pgp, emulated_latency, time_limit, no_time_limit)
 
     @Session.time_limited_execution
     @Session.retry_on_failure(MAX_ATTEMPTS,

@@ -115,6 +115,11 @@ If you want to modify any of these files (e.g., to change the Chrome profiles, a
       >
     - **UNTRACKED**: `'true'` or `'false'` to specify whether to use a privacy-focused browser profile.
     - **PGP**: `'true'` or `'false'` to specify whether to use PGP encryption (only relevant for the self-hosted solution).
+    - **EMULATED_LATENCY**: Specifies the network latency and bandwidth to emulate during the scenario. Possible values are:
+      - `'on_site'`: Simulates the latency and bandwidth on ULB network.
+      - `'remote'`: Simulates the latency from a home network to ULB network.
+      - `'false'`: No additional network latency is added.
+      > **Note:** The network constraints are defined in [`constants.py`](#file:constants.py-context) and can be adjusted as needed.
     - **TIME_LIMIT**: The time limit (in minutes) for the scenario (limits the total duration of the scenario).
     - **N_SESSION**: Number of repeated sessions to run.
     - **N_MAIL_SENT**: A dictionary specifying how many emails to send with each attachment size (e.g., `{ "0": 1, "5": 1, ... }` means send 1 email with no attachment, 1 with 5MB, etc.).

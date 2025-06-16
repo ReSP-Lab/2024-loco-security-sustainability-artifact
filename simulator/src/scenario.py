@@ -25,7 +25,7 @@ class Scenario:
     
     id = 0
     
-    def __init__(self, user, user_address, user_psw, contacts, provider, browser, adblock, untracked, pgp,
+    def __init__(self, user, user_address, user_psw, contacts, provider, browser, adblock, untracked, pgp, emulated_latency,
                  time_limit, n_session, n_mail_to_send, n_mail_to_read_and_answer, n_mail_to_read_and_delete):
         # Identifier
         self.id == Scenario.id
@@ -42,6 +42,7 @@ class Scenario:
         self.adblock = adblock
         self.untracked = untracked
         self.pgp = pgp
+        self.emulated_latency = emulated_latency
         self.time_limit = time_limit # in seconds
         self.n_session = n_session
         self.n_mail_to_send = n_mail_to_send
@@ -103,13 +104,13 @@ class Scenario:
         This function opens a session on the email service provider's website
         '''
         if self.provider == OUTLOOK:
-            session = OutlookSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.time_limit, no_time_limit)
+            session = OutlookSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.emulated_latency, self.time_limit, no_time_limit)
         elif self.provider == PROTON:
-            session = ProtonSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.time_limit, no_time_limit)
+            session = ProtonSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.emulated_latency, self.time_limit, no_time_limit)
         elif self.provider == GMAIL:
-            session = GmailSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.time_limit, no_time_limit)
+            session = GmailSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.emulated_latency, self.time_limit, no_time_limit)
         elif self.provider == MY_SOLUTION:
-            session = MySolutionSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.time_limit, no_time_limit)
+            session = MySolutionSession(self.user_address, self.user_psw, self.browser, self.adblock, self.untracked, self.pgp, self.emulated_latency, self.time_limit, no_time_limit)
         return session
     
     def get_email_file_path(self, firstname=None, surname=None):

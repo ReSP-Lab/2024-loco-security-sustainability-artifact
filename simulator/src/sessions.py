@@ -25,7 +25,7 @@ from constants import *
 
 
 class WebDriver():
-    def __init__(self, browser_name, adblock=False, untracked=False, pgp=False):
+    def __init__(self, browser_name, adblock=False, untracked=False, pgp=False, emulated_latency=False):
         match browser_name:
             case CHROME:
                 try:
@@ -74,6 +74,29 @@ class WebDriver():
 
                 if adblock: print("[INFO] : AdBlock extension is loaded.")
                 print(f"[INFO] : {"Limited" if untracked else "Allowed"} tracking profile loaded.")
+
+
+                # We inject some delays to simulate real user behavior
+                # Emulate 150ms latency (round trip), realistic for intercontinental
+                if emulated_latency:
+                    if emulated_latency == "on_site":
+                        latency = ON_SITE_LATENCY
+                        download_bps = ON_SITE_DOWNLOAD_MBPS * 1024 * 1024 / 8  # Mbps → Bytes/sec
+                        upload_bps = ON_SITE_UPLOAD_MBPS * 1024 * 1024 / 8
+                    else:
+                        latency = REMOTE_LATENCY
+                        download_bps = REMOTE_DOWNLOAD_MBPS * 1024 * 1024 / 8
+                        upload_bps = REMOTE_UPLOAD_MBPS * 1024 * 1024 / 8
+
+                    self.driver.execute_cdp_cmd(
+                        "Network.emulateNetworkConditions",
+                        {
+                            "offline": False,
+                            "latency": latency,
+                            "downloadThroughput": download_bps,
+                            "uploadThroughput": upload_bps,
+                        }
+                    )
                
         # set Window Size
         self.driver.set_window_size(width=1296, height=736)
@@ -87,6 +110,7 @@ class Session:
                  adblock,
                  untracked,
                  pgp=False,
+                 emulated_latency=False,
                  time_limit=TIME_LIMIT,
                  no_time_limit=False):
         self.user_address = user_address
@@ -95,7 +119,7 @@ class Session:
         self.start = time.time()
         self.time_limit = time_limit
         self.no_time_limit = no_time_limit
-        self.driver = WebDriver(browser_name, adblock, untracked, pgp).driver
+        self.driver = WebDriver(browser_name, adblock, untracked, pgp, emulated_latency).driver
 
 
         self.stats = {  "login" : 0,

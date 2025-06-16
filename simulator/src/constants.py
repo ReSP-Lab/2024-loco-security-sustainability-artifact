@@ -29,6 +29,18 @@ WAIT_AFTER_PAGE_LOADED = 5  # Seconds to wait after a page is loaded so that dis
 MAILVELOPE_POPUP_WAIT_TIME = 2 # Max seconds to wait for Mailvelope credentials handling window to popup (Use 2)
 DEFAULT_PAUSE_DELAY = 2    # Determine defult value of Session.pause() (Use 2)
 
+
+# Network Constraint Simulation Constants :
+ON_SITE_LATENCY = 30           # ms
+REMOTE_LATENCY = 50           # ms
+
+ON_SITE_DOWNLOAD_MBPS = 50     # Mbps
+ON_SITE_UPLOAD_MBPS = 20       # Mbps
+
+REMOTE_DOWNLOAD_MBPS = 23.03      # Mbps
+REMOTE_UPLOAD_MBPS = 15.83        # Mbps
+
+
 # Keys for the Default arguments dictionnary :
 USER = "USER"
 USER_PASSWORD = "USER_PASSWORD"
@@ -37,6 +49,7 @@ BROWSER = "BROWSER"
 ADBLOCK = "ADBLOCK"
 UNTRACKED = "UNTRACKED"
 PGP = "PGP"
+EMULATED_LATENCY = "EMULATED_LATENCY"
 TIME_LIMIT =  "TIME_LIMIT"
 N_SESSION = 'N_SESSION'
 N_MAIL_SENT = "N_MAIL_SENT"
@@ -60,7 +73,8 @@ SCENARIOS = {
         BROWSER: CHROME,
         ADBLOCK:"true",
         UNTRACKED:"true",
-        PGP: "false",   
+        PGP: "false",
+        EMULATED_LATENCY: "on_site",  # "false", "on_site" or "remote"
         TIME_LIMIT: 3,
         N_SESSION: 1,
         N_MAIL_SENT: { # for each attachment size
