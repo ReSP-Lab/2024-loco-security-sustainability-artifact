@@ -288,7 +288,7 @@ class Session:
                 target.clear()
                 for char in input:
                     target.send_keys(char)
-                # target.send_keys(input)
+                #target.send_keys(input)
                 if hit_enter:
                     target.send_keys(Keys.ENTER)
                 return
