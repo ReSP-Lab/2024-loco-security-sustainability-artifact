@@ -4,3 +4,4 @@ my_email_solution/docker-data/ca/
 my_email_solution/docker-data/dms/
 my_email_solution/docker-data/webmail/config/ssl/
 simulator/src/__pycache__/
+*.DS_Store
